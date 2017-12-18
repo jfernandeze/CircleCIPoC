@@ -5,9 +5,14 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{CEE6CE74-64E7-4367-A436-87E7E42E5286}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Tests", "WebApi.Tests\WebApi.Tests.csproj", "{88F621D0-F841-444E-A233-401DF55A19CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Tests", "WebApi.Tests\WebApi.Tests.csproj", "{88F621D0-F841-444E-A233-401DF55A19CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSpa", "WebSpa\WebSpa.csproj", "{2DE5C9E5-1A5B-4104-AD80-F6566BF491EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSpa", "WebSpa\WebSpa.csproj", "{2DE5C9E5-1A5B-4104-AD80-F6566BF491EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6AEC0DFD-387A-4E60-9D9C-E52D9442A14E}"
+	ProjectSection(SolutionItems) = preProject
+		build.cake = build.cake
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
