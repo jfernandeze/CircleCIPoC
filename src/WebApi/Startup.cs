@@ -18,6 +18,11 @@ namespace DialogWeaver.WebApi
         {
             services.AddMvc();
 
+            services.AddCors( app => app.AddPolicy( "default",
+                options => options.AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .AllowAnyOrigin() ) );
+
             services.AddTransient<IValueService, ValueService>();
         }
 
@@ -28,6 +33,8 @@ namespace DialogWeaver.WebApi
         /// <param name="env">The environment.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors("default");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
