@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
+import { HeaderComponent } from './components/navmenu/header.component';
 import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
@@ -14,6 +15,7 @@ import { CounterComponent } from './components/counter/counter.component';
     declarations: [
         AppComponent,
         NavMenuComponent,
+        HeaderComponent,
         CounterComponent,
         FetchDataComponent,
         HomeComponent
