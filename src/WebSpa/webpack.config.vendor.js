@@ -16,7 +16,7 @@ const treeShakableModules = [
 ];
 const nonTreeShakableModules = [
     'bootstrap',
-    'bootstrap/dist/css/bootstrap.css',
+    'bootstrap/scss/bootstrap.scss',
     'es6-promise',
     'es6-shim',
     'event-source-polyfill',
@@ -61,7 +61,14 @@ module.exports = (env) => {
         output: { path: path.join(__dirname, 'wwwroot', 'dist') },
         module: {
             rules: [
-                { test: /\.css(\?|$)/, use: extractCSS.extract({ use: isDevBuild ? 'css-loader' : 'css-loader?minimize' }) }
+                {
+                    test: /\.css(\?|$)/,
+                    use: extractCSS.extract({ use: isDevBuild ? 'css-loader' : 'css-loader?minimize' })
+                },
+                {
+                    test: /\.scss(\?|$)/,
+                    use: extractCSS.extract({ use: ["raw-loader", isDevBuild ? 'sass-loader' : "sass-loader?outputStyle=uncompressed"] })
+                }
             ]
         },
         plugins: [
@@ -84,7 +91,16 @@ module.exports = (env) => {
             libraryTarget: 'commonjs2',
         },
         module: {
-            rules: [ { test: /\.css(\?|$)/, use: ['to-string-loader', isDevBuild ? 'css-loader' : 'css-loader?minimize' ] } ]
+            rules: [
+                {
+                    test: /\.css(\?|$)/,
+                    use: ['to-string-loader', isDevBuild ? 'css-loader' : 'css-loader?minimize']
+                },
+                {
+                    test: /\.scss(\?|$)/,
+                    use: ["raw-loader", "sass-loader"]
+                }
+            ]
         },
         plugins: [
             new webpack.DllPlugin({
