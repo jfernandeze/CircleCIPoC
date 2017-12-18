@@ -6,7 +6,7 @@ namespace DialogWeaver.WebApi
     /// <summary>
     /// Container for the entry point of the application
     /// </summary>
-    public class Program
+    public static class Program
     {
         /// <summary>
         /// Application entry point
