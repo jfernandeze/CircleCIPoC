@@ -22,14 +22,6 @@ namespace DialogWeaver.WebApi.Tests
         private readonly Mock<IValueService> _valueService;
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            _valueService.VerifyAll();
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ValueControllerTests"/> class.
         /// </summary>
         public ValueControllerTests()
@@ -67,6 +59,26 @@ namespace DialogWeaver.WebApi.Tests
 
             var actualException = Assert.Throws<InvalidOperationException>(() =>_sut.GetAll());
             Assert.Equal(expectedException, actualException);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _valueService.VerifyAll();
+                _sut?.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~ValueControllerTests()
+        {
+            Dispose(false);
         }
     }
 }

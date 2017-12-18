@@ -20,7 +20,7 @@ namespace DialogWeaver.WebApi.Tests
         /// </summary>
         public ValueServiceTests()
         {
-            _sut = new ValueService(new string[0]);
+            _sut = new ValueService(Array.Empty<string>());
         }
 
         /// <summary>

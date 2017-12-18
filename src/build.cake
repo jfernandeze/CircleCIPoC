@@ -1,4 +1,4 @@
-var target = Argument("target", "UnitTests");
+var target = Argument("target", "Build");
 var configuration = Argument("configuration", "Release");
 var solution = Argument("solution", "DialogWeaver.sln");
 
