@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using DialogWeaver.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DialogWeaver.WebApi.Controllers
@@ -10,7 +11,20 @@ namespace DialogWeaver.WebApi.Controllers
     [Route("api/value")]
     public class ValueController : Controller
     {
-        private static readonly IList<string> Values = new List<string>();
+        /// <summary>
+        /// The value service
+        /// </summary>
+        private readonly IValueService _valueService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValueController"/> class.
+        /// </summary>
+        /// <param name="valueService">The value service.</param>
+        /// <exception cref="ArgumentNullException">valueService</exception>
+        public ValueController(IValueService valueService)
+        {
+            _valueService = valueService ?? throw new ArgumentNullException(nameof(valueService));
+        }
 
         /// <summary>
         /// Get all values
@@ -19,7 +33,7 @@ namespace DialogWeaver.WebApi.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(Values);
+            return Ok(_valueService.GetAll());
         }
 
         /// <summary>
@@ -29,7 +43,7 @@ namespace DialogWeaver.WebApi.Controllers
         [HttpPost("{value}")]
         public IActionResult Add([FromRoute]string value)
         {
-            Values.Add(value);
+            _valueService.Add(value);
 
             return Accepted();
         }
