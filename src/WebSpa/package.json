@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "test": "karma start ClientApp/test/karma.conf.js",
-    "webpack":  "webpack --config webpack.config.vendor.js && webpack" 
+    "webpack": "webpack --config webpack.config.vendor.js && webpack" ,
+    "tslint": "tslint -p ." 
   },
   "devDependencies": {
     "@angular/animations": "5.x",
@@ -56,6 +57,7 @@
     "sass-loader": "6.0.6" ,
     "style-loader": "0.18.2",
     "to-string-loader": "1.1.5",
+    "tslint": "5.8.0", 
     "typescript": "2.4.1",
     "url-loader": "0.5.9",
     "webpack": "2.5.1",
