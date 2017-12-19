@@ -2,7 +2,14 @@ var target = Argument("target", "Build");
 var configuration = Argument("configuration", "Release");
 var solution = Argument("solution", "DialogWeaver.sln");
 
+Task("RestorePackages")
+	.Does(() =>
+	{
+		DotNetCoreRestore();
+	});
+
 Task("Build")
+	.IsDependentOn("RestorePackages")
 	.Does(() =>
 	{
 		var settings = new DotNetCoreMSBuildSettings()
