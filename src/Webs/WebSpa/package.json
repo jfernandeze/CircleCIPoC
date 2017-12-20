@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "test": "karma start ClientApp/test/karma.conf.js",
-    "webpack": "webpack --config webpack.config.vendor.js && webpack" ,
-    "tslint": "tslint -p ." 
+    "webpack": "webpack --config webpack.config.vendor.js && webpack",
+    "webpack-pro": "webpack --config webpack.config.vendor.js --env.prod && webpack --env.prod",
+    "tslint": "tslint -p ."
   },
   "devDependencies": {
     "@angular/animations": "5.x",
