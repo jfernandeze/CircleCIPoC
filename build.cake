@@ -42,6 +42,7 @@ Task("Publish")
 			var outputPath = System.IO.Path.Combine(publishOutput, webLastDirectory);
 			var settings = new DotNetCorePublishSettings
 			 {
+				 Configuration = configuration,
 				 OutputDirectory = outputPath
 			 };
 
