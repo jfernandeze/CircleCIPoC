@@ -1,20 +1,25 @@
-#addin "Cake.Npm"
-
 var target = Argument("target", "Build");
 var configuration = Argument("configuration", "Release");
-var solution = Argument("solution", "DialogWeaver.sln");
+var solution = Argument("solution", "src/DialogWeaver.sln");
 var publishOutput = "./publish/";
 
+
+Task("Clean")
+	.Does(() =>
+	{
+		CleanDirectory(publishOutput);
+	});
 
 
 Task("RestorePackages")
 	.Does(() =>
 	{
-		DotNetCoreRestore();
+		DotNetCoreRestore(solution);
 	});
 
 Task("Build")
 	.IsDependentOn("RestorePackages")
+	.IsDependentOn("Clean")
 	.Does(() =>
 	{
 		var settings = new DotNetCoreMSBuildSettings()
@@ -29,15 +34,12 @@ Task("Publish")
 	.IsDependentOn("Build")	
 	.Does(() => 
 	{
-		var websites = System.IO.Directory.EnumerateDirectories("./Webs");
+		var websites = System.IO.Directory.EnumerateDirectories("./src/Webs");
 
 		foreach(var web in websites)
 		{
-			Information(web);
-			var webLastDirectory = System.IO.Path.GetDirectoryName(web).Split(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar).Last();
-			Information(webLastDirectory);
+			var webLastDirectory = web.Split(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar).Last();
 			var outputPath = System.IO.Path.Combine(publishOutput, webLastDirectory);
-			Information(outputPath);
 			var settings = new DotNetCorePublishSettings
 			 {
 				 OutputDirectory = outputPath
@@ -61,5 +63,14 @@ Task("UnitTests")
 			 DotNetCoreTest(file.FullPath, settings);
 		 }
 	});
+
+private void CleanDirectory(string path)
+{
+	if(System.IO.Directory.Exists(path))
+	{
+		System.IO.Directory.Delete(path, true);
+		System.IO.Directory.CreateDirectory(path);
+	}
+}
 
 RunTarget(target);

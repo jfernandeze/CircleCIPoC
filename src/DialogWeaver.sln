@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Tests", "WebApi.Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6AEC0DFD-387A-4E60-9D9C-E52D9442A14E}"
 	ProjectSection(SolutionItems) = preProject
-		build.cake = build.cake
+		..\build.cake = ..\build.cake
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "Webs\WebApi\WebApi.csproj", "{D1E7C95B-D786-4A8C-A0F3-0C7D573E1E8D}"
