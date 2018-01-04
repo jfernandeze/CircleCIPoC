@@ -9,6 +9,7 @@ export class FetchDataComponent implements OnInit {
 
     values: Array<string> = [];
     newValue: string = "";
+    testany: any;
 
     constructor(private http: HttpClient) {
                 
