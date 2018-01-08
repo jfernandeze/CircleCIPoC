@@ -1,8 +1,9 @@
+#addin "Cake.Karma"
+
 var target = Argument("target", "Build");
 var configuration = Argument("configuration", "Release");
 var solution = Argument("solution", "src/DialogWeaver.sln");
 var publishOutput = "./publish/";
-
 
 Task("Clean")
 	.Does(() =>
@@ -63,6 +64,22 @@ Task("UnitTests")
 		 {
 			 DotNetCoreTest(file.FullPath, settings);
 		 }
+	});
+
+Task("SPATests")
+	.Does(() =>
+	{
+		Information("Running Global Karma");
+
+        var settings = new KarmaStartSettings
+        {
+           ConfigFile = "ClientApp/test/karma.conf.js",
+		   //LocalKarmaCli = "karma",
+		   //RunMode = KarmaRunMode.Local
+		   //WorkingDirectory = "src/Webs/WebSpa"
+        };
+
+		KarmaStart(settings);
 	});
 
 private void CleanDirectory(string path)
