@@ -69,14 +69,16 @@ Task("UnitTests")
 Task("SPATests")
 	.Does(() =>
 	{
-		Information("Running Global Karma");
+		Information("Running Local Karma");
+
+		var currentDirectory = Environment.CurrentDirectory;
 
         var settings = new KarmaStartSettings
         {
-           ConfigFile = "ClientApp/test/karma.conf.js",
-		   //LocalKarmaCli = "karma",
-		   //RunMode = KarmaRunMode.Local
-		   //WorkingDirectory = "src/Webs/WebSpa"
+           ConfigFile = System.IO.Path.Combine(currentDirectory, "src/Webs/WebSpa/ClientApp/test/karma.conf.js"),		                  
+		   RunMode = KarmaRunMode.Local,
+		   LocalKarmaCli = System.IO.Path.Combine(currentDirectory, "src/Webs/WebSpa/node_modules/karma-cli/bin/karma"),
+		   WorkingDirectory = System.IO.Path.Combine(currentDirectory,"src/Webs/WebSpa")
         };
 
 		KarmaStart(settings);
