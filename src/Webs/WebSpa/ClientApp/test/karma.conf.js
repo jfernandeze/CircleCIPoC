@@ -4,7 +4,7 @@
 module.exports = function (config) {
     config.set({
         basePath: '.',
-        frameworks: ['jasmine'],
+        frameworks: ['es6-shim','jasmine'],
         files: [
             '../../wwwroot/dist/vendor.js',
             './boot-tests.ts'
@@ -17,7 +17,7 @@ module.exports = function (config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['Chrome'],
+        browsers: ['jsdom'],
         mime: { 'application/javascript': ['ts','tsx'] },
         singleRun: false,
         webpack: require('../../webpack.config.js')().filter(config => config.target !== 'node'), // Test against client bundle, because tests run in a browser
