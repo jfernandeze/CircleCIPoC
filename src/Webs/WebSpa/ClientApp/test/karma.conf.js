@@ -12,7 +12,7 @@ module.exports = function (config) {
         preprocessors: {
             './boot-tests.ts': ['webpack']
         },
-        reporters: ['progress'],
+        reporters: ['progress','teamcity'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
