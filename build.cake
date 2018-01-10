@@ -1,14 +1,17 @@
 #addin "Cake.Karma"
+#tool "nuget:?package=OpenCover"
 
 var target = Argument("target", "Build");
 var configuration = Argument("configuration", "Release");
 var solution = Argument("solution", "src/DialogWeaver.sln");
 var publishOutput = "./publish/";
+var codeCoverageOutput = "./codeCoverage/";
 
 Task("Clean")
 	.Does(() =>
 	{
 		CleanDirectory(publishOutput);
+		CleanDirectory(codeCoverageOutput);
 	});
 
 
@@ -62,7 +65,23 @@ Task("UnitTests")
 		 var projectFiles = GetFiles("./**/*.Tests.csproj");
 		 foreach(var file in projectFiles)
 		 {
-			 DotNetCoreTest(file.FullPath, settings);
+		   var buildFolder = FindBuildFolder(file);
+		   var openCoverSettings = new OpenCoverSettings
+			{
+				OldStyle = true,
+				MergeOutput = true
+		    }
+			.WithFilter("+[DialogWeaver.*]*")
+			.WithFilter("-[*.Tests*]*");
+
+			openCoverSettings.SearchDirectories.Add(buildFolder);
+
+			 OpenCover(tool =>
+				{
+					tool.DotNetCoreTest(file.FullPath, settings);
+				},
+				System.IO.Path.Combine(codeCoverageOutput, "result.xml"),
+				openCoverSettings);
 		 }
 	});
 
@@ -91,6 +110,16 @@ private void CleanDirectory(string path)
 		System.IO.Directory.Delete(path, true);
 		System.IO.Directory.CreateDirectory(path);
 	}
+	else
+	{
+		System.IO.Directory.CreateDirectory(path);
+	}
+}
+
+private string FindBuildFolder(FilePath projectFilePath)
+{
+	var folder = System.IO.Path.GetDirectoryName(projectFilePath.ToString());
+	return System.IO.Directory.EnumerateDirectories(folder, "bin\\" + configuration + "\\*").FirstOrDefault();
 }
 
 RunTarget(target);
