@@ -72,7 +72,8 @@ Task("UnitTests")
 		   var openCoverSettings = new OpenCoverSettings
 			{
 				OldStyle = true,
-				MergeOutput = true
+				MergeOutput = true,
+				Register = "Path32"
 		    }
 			.WithFilter("+[DialogWeaver.*]*")
 			.WithFilter("-[*.Tests*]*");
