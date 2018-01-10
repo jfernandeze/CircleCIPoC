@@ -61,7 +61,8 @@ Task("UnitTests")
 	{
 		var settings = new DotNetCoreTestSettings
 		 {
-			 Configuration = configuration
+			 Configuration = configuration,
+			 NoBuild = true
 		 };
 
 		 var projectFiles = GetFiles("./**/*.Tests.csproj");
@@ -71,9 +72,7 @@ Task("UnitTests")
 		   var openCoverSettings = new OpenCoverSettings
 			{
 				OldStyle = true,
-				MergeOutput = true,
-				LogLevel = OpenCoverLogLevel.All,
-				ToolTimeout = TimeSpan.FromSeconds(600)
+				MergeOutput = true
 		    }
 			.WithFilter("+[DialogWeaver.*]*")
 			.WithFilter("-[*.Tests*]*");
