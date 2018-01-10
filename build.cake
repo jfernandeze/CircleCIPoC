@@ -1,17 +1,20 @@
 #addin "Cake.Karma"
 #tool "nuget:?package=OpenCover"
+#tool "nuget:?package=ReportGenerator"
 
 var target = Argument("target", "Build");
 var configuration = Argument("configuration", "Release");
 var solution = Argument("solution", "src/DialogWeaver.sln");
 var publishOutput = "./publish/";
 var codeCoverageOutput = "./codeCoverage/";
+var codeCoverageReportOutput = "./codeCoverage/report/";
 
 Task("Clean")
 	.Does(() =>
 	{
 		CleanDirectory(publishOutput);
 		CleanDirectory(codeCoverageOutput);
+		EnsureDirectory(codeCoverageReportOutput);
 	});
 
 
@@ -83,6 +86,8 @@ Task("UnitTests")
 				System.IO.Path.Combine(codeCoverageOutput, "result.xml"),
 				openCoverSettings);
 		 }
+
+		 ReportGenerator(System.IO.Path.Combine(codeCoverageOutput, "result.xml"), codeCoverageReportOutput);
 	});
 
 Task("SPATests")
@@ -111,6 +116,14 @@ private void CleanDirectory(string path)
 		System.IO.Directory.CreateDirectory(path);
 	}
 	else
+	{
+		System.IO.Directory.CreateDirectory(path);
+	}
+}
+
+private void EnsureDirectory(string path)
+{
+	if(!System.IO.Directory.Exists(path))
 	{
 		System.IO.Directory.CreateDirectory(path);
 	}
