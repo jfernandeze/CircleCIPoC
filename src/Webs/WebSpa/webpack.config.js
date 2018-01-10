@@ -20,7 +20,8 @@ module.exports = (env) => {
                 {
                     test: /\.ts$/,
                     enforce: 'pre',
-                    loader: 'tslint-loader'
+                    loader: 'tslint-loader',
+                    exclude: ['./ClientApp/test/*.ts']
                 },
                 {
                     test: /\.ts$/,
@@ -40,7 +41,11 @@ module.exports = (env) => {
                 }
             ]
         },
-        plugins: [new CheckerPlugin()]
+        plugins: [new CheckerPlugin(),
+            new webpack.ContextReplacementPlugin(
+                /angular(\\|\/)core/,
+                path.resolve(__dirname, './')
+            )]
     };
 
     // Configuration for client-side bundle suitable for running in browsers
