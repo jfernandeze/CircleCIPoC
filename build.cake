@@ -38,7 +38,6 @@ Task("Build")
 	});
 
 Task("Publish")
-	.IsDependentOn("Build")	
 	.Does(() => 
 	{
 		var websites = System.IO.Directory.EnumerateDirectories("./src/Webs");
@@ -62,7 +61,8 @@ Task("UnitTests")
 	{
 		var settings = new DotNetCoreTestSettings
 		 {
-			 Configuration = configuration
+			 Configuration = configuration,
+			 NoBuild = true
 		 };
 
 		 var projectFiles = GetFiles("./**/*.Tests.csproj");
