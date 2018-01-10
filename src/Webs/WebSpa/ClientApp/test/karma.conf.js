@@ -15,7 +15,7 @@ module.exports = function (config) {
         reporters: ['progress','teamcity'],
         port: 9876,
         colors: true,
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_DEBUG,
         //autoWatch: true,
         browsers: ['jsdom'],
         mime: { 'application/javascript': ['ts','tsx'] },
