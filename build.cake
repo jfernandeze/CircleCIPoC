@@ -71,7 +71,9 @@ Task("UnitTests")
 		   var openCoverSettings = new OpenCoverSettings
 			{
 				OldStyle = true,
-				MergeOutput = true
+				MergeOutput = true,
+				LogLevel = OpenCoverLogLevel.All,
+				ToolTimeout = TimeSpan.FromSeconds(600)
 		    }
 			.WithFilter("+[DialogWeaver.*]*")
 			.WithFilter("-[*.Tests*]*");
