@@ -16,6 +16,7 @@ module.exports = function (config) {
         port: 9876,
         colors: true,
         logLevel: config.LOG_DEBUG,
+        browserNoActivityTimeout: 100000,
         //autoWatch: true,
         browsers: ['jsdom'],
         mime: { 'application/javascript': ['ts','tsx'] },
