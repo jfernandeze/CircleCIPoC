@@ -132,7 +132,8 @@ private void EnsureDirectory(string path)
 private string FindBuildFolder(FilePath projectFilePath)
 {
 	var folder = System.IO.Path.GetDirectoryName(projectFilePath.ToString());
-	return System.IO.Directory.EnumerateDirectories(folder, "bin\\" + configuration + "\\*").FirstOrDefault();
+	var pattern = string.Format(@"bin\{0}\*", configuration);
+	return System.IO.Directory.EnumerateDirectories(folder, pattern).FirstOrDefault();
 }
 
 RunTarget(target);
