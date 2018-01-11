@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using DialogWeaver.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using NSwag;
+using NSwag.Annotations;
 
 namespace DialogWeaver.WebApi.Controllers
 {
@@ -31,6 +36,7 @@ namespace DialogWeaver.WebApi.Controllers
         /// </summary>
         /// <returns>All values</returns>
         [HttpGet]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(IEnumerable<string>))]
         public IActionResult GetAll()
         {
             return Ok(_valueService.GetAll());
@@ -41,6 +47,7 @@ namespace DialogWeaver.WebApi.Controllers
         /// </summary>
         /// <param name="value">The value.</param>
         [HttpPost("{value}")]
+        [SwaggerResponse(HttpStatusCode.Accepted, typeof(void))]
         public IActionResult Add([FromRoute]string value)
         {
             _valueService.Add(value);

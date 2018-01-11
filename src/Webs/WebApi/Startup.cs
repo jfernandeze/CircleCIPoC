@@ -1,7 +1,9 @@
-﻿using DialogWeaver.WebApi.Services;
+﻿using System.Reflection;
+using DialogWeaver.WebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using NSwag.AspNetCore;
 
 namespace DialogWeaver.WebApi
 {
@@ -39,6 +41,14 @@ namespace DialogWeaver.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            var swaggerUiSettings = new SwaggerUiSettings
+            {
+                IsAspNetCore = true,
+                SupportedSubmitMethods = new string[0],
+
+            };
+            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, swaggerUiSettings);
 
             app.UseMvcWithDefaultRoute();
         }
