@@ -68,7 +68,7 @@ Task("UnitTests")
 			 NoBuild = true
 		 };
 
-		 var projectFiles = GetFiles("./**/*.Tests.csproj");
+		 var projectFiles = GetFiles("./src/**/*.Tests.csproj");
 		 foreach(var file in projectFiles)
 		 {
 		   var buildFolder = FindBuildFolder(file);
@@ -121,7 +121,7 @@ Task("UpdateNetcoreVersion")
 	.IsDependentOn("GetGitVersion")
 	.Does(() =>
 	{
-		var projectFiles = GetFiles("./**/*.csproj");
+		var projectFiles = GetFiles("./src/**/*.csproj");
 		foreach(var file in projectFiles)
 		{
 			Information(file.ToString());
