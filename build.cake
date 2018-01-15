@@ -1,6 +1,7 @@
 #addin "Cake.Karma"
 #tool "nuget:?package=OpenCover"
 #tool "nuget:?package=ReportGenerator"
+#tool "nuget:?package=GitVersion.CommandLine"
 
 var target = Argument("target", "Build");
 var configuration = Argument("configuration", "Release");
@@ -8,6 +9,7 @@ var solution = Argument("solution", "src/DialogWeaver.sln");
 var publishOutput = "./publish/";
 var codeCoverageOutput = "./codeCoverage/";
 var codeCoverageReportOutput = "./codeCoverage/report/";
+Cake.Common.Tools.GitVersion.GitVersion version;
 
 Task("Clean")
 	.Does(() =>
@@ -27,6 +29,7 @@ Task("RestorePackages")
 Task("Build")
 	.IsDependentOn("RestorePackages")
 	.IsDependentOn("Clean")
+	.IsDependentOn("UpdateNetcoreVersion")
 	.Does(() =>
 	{
 		var settings = new DotNetCoreMSBuildSettings()
@@ -106,6 +109,25 @@ Task("SPATests")
         };
 
 		KarmaStart(settings);
+	});
+
+Task("GetGitVersion")
+	.Does(() =>
+	{
+		version = GitVersion();
+    });
+
+Task("UpdateNetcoreVersion")
+	.IsDependentOn("GetGitVersion")
+	.Does(() =>
+	{
+		var projectFiles = GetFiles("./**/*.csproj");
+		foreach(var file in projectFiles)
+		{
+			Information(file.ToString());
+			XmlPoke(file, "/Project/PropertyGroup[1]/AssemblyVersion", version.AssemblySemVer);
+			XmlPoke(file, "/Project/PropertyGroup[1]/FileVersion", version.AssemblySemVer);
+		}
 	});
 
 private void CleanDirectory(string path)
