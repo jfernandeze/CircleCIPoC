@@ -114,7 +114,10 @@ Task("SPATests")
 Task("GetGitVersion")
 	.Does(() =>
 	{
-		version = GitVersion();
+		version = GitVersion(new GitVersionSettings
+			{
+				NoFetch=true
+			});
     });
 
 Task("UpdateNetcoreVersion")
