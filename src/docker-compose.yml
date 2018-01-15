@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  webapi:
+    image: webapi
+    build:
+      context: .
+      dockerfile: Webs/WebApi/Dockerfile
+
+  webspa:
+    image: webspa
+    build:
+      context: .
+      dockerfile: Webs/WebSpa/Dockerfile
+

@@ -1,3 +1,4 @@
+#addin "Cake.Docker"
 #addin "Cake.Karma"
 #tool "nuget:?package=OpenCover"
 #tool "nuget:?package=ReportGenerator"
@@ -49,13 +50,19 @@ Task("Publish")
 		{
 			var webLastDirectory = web.Split(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar).Last();
 			var outputPath = System.IO.Path.Combine(publishOutput, webLastDirectory);
+			var contentPath = System.IO.Path.Combine(outputPath, "content");
+			var sourceDockerfilePath = System.IO.Path.Combine(web, "Dockerfile_CI");
+			var targetDockerfilePath = System.IO.Path.Combine(outputPath, "Dockerfile");
+
 			var settings = new DotNetCorePublishSettings
 			 {
 				 Configuration = configuration,
-				 OutputDirectory = outputPath
+				 OutputDirectory = contentPath
 			 };
 
 			DotNetCorePublish(web, settings);
+
+			CopyFile(sourceDockerfilePath, targetDockerfilePath);
 		}
 	});
 
@@ -130,6 +137,21 @@ Task("UpdateNetcoreVersion")
 			Information(file.ToString());
 			XmlPoke(file, "/Project/PropertyGroup[1]/AssemblyVersion", version.AssemblySemVer);
 			XmlPoke(file, "/Project/PropertyGroup[1]/FileVersion", version.AssemblySemVer);
+		}
+	});
+
+	Task("ImageBuild")
+	.IsDependentOn("GetGitVersion")
+	.Does(() =>
+	{
+		foreach(var publishTarget in System.IO.Directory.EnumerateDirectories(publishOutput))
+		{
+			var targetName = publishTarget.Split(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar).Last().ToLower();
+			var settings = new DockerImageBuildSettings
+			{
+				Tag = new[] { $"arcmedia/DW_{targetName}:{version.SemVer}".ToLower() }
+			};
+			DockerBuild(settings, publishTarget);
 		}
 	});
 
