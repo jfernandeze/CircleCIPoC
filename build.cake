@@ -149,7 +149,7 @@ Task("UpdateNetcoreVersion")
 			var targetName = publishTarget.Split(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar).Last().ToLower();
 			var settings = new DockerImageBuildSettings
 			{
-				Tag = new[] { $"arcmedia/DW_{targetName}:{version.SemVer}".ToLower() }
+				Tag = new[] { $"arcmedia/DW_{targetName}:{version.SemVer}".ToLower(), $"arcmedia/DW_{targetName}:latest".ToLower() }
 			};
 			DockerBuild(settings, publishTarget);
 		}

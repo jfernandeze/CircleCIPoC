@@ -3,4 +3,4 @@ ARG source
 WORKDIR /app
 EXPOSE 80
 COPY ./content/ .
-ENTRYPOINT ["dotnet", "Dialogweaver.WebSpa.dll"]
+ENTRYPOINT ["dotnet", "DialogWeaver.WebSpa.dll"]

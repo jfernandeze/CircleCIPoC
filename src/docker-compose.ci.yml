@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  webapi:
+    image: arcmedia/dw_webapi
+
+  webspa:
+    image: arcmedia/dw_webspa
+    depends_on:
+      - webapi
+    ports:
+      - "5000:80"
