@@ -11,7 +11,7 @@ build:
 test:
   stage: test
   script:
-    - ./build.sh -target=UnitTests
+    - ./build.sh -target=UnitTests -verbosity=diagnostic
 
 publish:
   stage: publish
