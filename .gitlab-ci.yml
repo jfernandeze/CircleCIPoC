@@ -29,6 +29,7 @@ publish:
 imagebuild:
   stage: imagebuild
   script:
+    - docker login --username root --password M0rpheus
     - ./build.sh -target=ImageBuild
   dependencies:
     - publish
