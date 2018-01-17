@@ -1,6 +1,6 @@
 #addin "Cake.Docker"
 #addin "Cake.Karma"
-#tool "nuget:?package=GitVersion.CommandLine&version=4.0.0-beta0012"
+#tool "nuget:?package=GitVersion.CommandLine"
 
 var target = Argument("target", "Build");
 var configuration = Argument("configuration", "Release");
@@ -98,10 +98,11 @@ Task("SPATests")
 Task("GetGitVersion")
 	.Does(() =>
 	{
-		version = GitVersion(new GitVersionSettings
-			{
-				NoFetch=true
-			});
+		version = new Cake.Common.Tools.GitVersion.GitVersion
+		{
+			AssemblySemVer = "0.1.0",
+			SemVer = "0.1.0-ARCDIALOG-12_CreateDockerRegistry"
+		};
     });
 
 Task("UpdateNetcoreVersion")
