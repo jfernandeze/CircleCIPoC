@@ -4,13 +4,16 @@ stages:
   - publish
 
 build:
+  stage: build
   script:
     - ./build.sh -target=Build
 
 test:
+  stage: test
   script:
     - ./build.sh -target=UnitTests
 
 publish:
+  stage: publish
   script:
     - ./build.sh -target=Publish
