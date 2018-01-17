@@ -129,6 +129,9 @@ Task("UpdateNetcoreVersion")
 				Tag = new[] { $"registry.cdpoc/root/dialogweaver/arcmedia/DW_{targetName}:{version.SemVer}".ToLower(), $"registry.cdpoc/root/dialogweaver/arcmedia/DW_{targetName}:latest".ToLower() }
 			};
 			DockerBuild(settings, publishTarget);
+			
+			
+			DockerPush($"registry.cdpoc/root/dialogweaver/arcmedia/DW_{targetName}:{version.SemVer}".ToLower());
 		}
 	});
 
