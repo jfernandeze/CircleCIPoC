@@ -12,8 +12,14 @@ test:
   stage: test
   script:
     - ./build.sh -target=UnitTests -verbosity=diagnostic
+  dependencies:
+    - build
 
 publish:
   stage: publish
   script:
     - ./build.sh -target=Publish
+  dependencies:
+    - test
+  artifacts:
+    - /publish
