@@ -29,7 +29,7 @@ publish:
 imagebuild:
   stage: imagebuild
   script:
-    - docker login --username root --password M0rpheus
+    - docker login --username root --password M0rpheus https://registry.cdpoc
     - ./build.sh -target=ImageBuild
   dependencies:
     - publish
