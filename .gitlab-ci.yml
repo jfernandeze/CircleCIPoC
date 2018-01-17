@@ -1,0 +1,9 @@
+build:
+  script:
+    - ./build.sh -target=Build
+test:
+  script:
+    - ./build.sh -target=UnitTests
+publish:
+  script:
+    - ./build.sh -target=Publish

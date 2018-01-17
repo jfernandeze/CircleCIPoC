@@ -1,23 +1,17 @@
 #addin "Cake.Docker"
 #addin "Cake.Karma"
-#tool "nuget:?package=OpenCover"
-#tool "nuget:?package=ReportGenerator"
 #tool "nuget:?package=GitVersion.CommandLine"
 
 var target = Argument("target", "Build");
 var configuration = Argument("configuration", "Release");
 var solution = Argument("solution", "src/DialogWeaver.sln");
 var publishOutput = "./publish/";
-var codeCoverageOutput = "./codeCoverage/";
-var codeCoverageReportOutput = "./codeCoverage/report/";
 Cake.Common.Tools.GitVersion.GitVersion version;
 
 Task("Clean")
 	.Does(() =>
 	{
 		CleanDirectory(publishOutput);
-		CleanDirectory(codeCoverageOutput);
-		EnsureDirectory(codeCoverageReportOutput);
 	});
 
 
@@ -78,26 +72,9 @@ Task("UnitTests")
 		 var projectFiles = GetFiles("./src/**/*.Tests.csproj");
 		 foreach(var file in projectFiles)
 		 {
-		   var buildFolder = FindBuildFolder(file);
-		   var openCoverSettings = new OpenCoverSettings
-			{
-				OldStyle = true,
-				MergeOutput = true
-		    }
-			.WithFilter("+[DialogWeaver.*]*")
-			.WithFilter("-[*.Tests*]*");
-
-			openCoverSettings.SearchDirectories.Add(buildFolder);
-
-			 OpenCover(tool =>
-				{
-					tool.DotNetCoreTest(file.FullPath, settings);
-				},
-				System.IO.Path.Combine(codeCoverageOutput, "result.xml"),
-				openCoverSettings);
+		   
+			DotNetCoreTest(file.FullPath, settings);
 		 }
-
-		 ReportGenerator(System.IO.Path.Combine(codeCoverageOutput, "result.xml"), codeCoverageReportOutput);
 	});
 
 Task("SPATests")
