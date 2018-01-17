@@ -2,6 +2,7 @@ stages:
   - build
   - test
   - publish
+  - imagebuild
 
 build:
   stage: build
@@ -11,7 +12,7 @@ build:
 test:
   stage: test
   script:
-    - ./build.sh -target=UnitTests -verbosity=diagnostic
+    - ./build.sh -target=UnitTests
   dependencies:
     - build
 
@@ -24,3 +25,10 @@ publish:
   artifacts:
     paths:
       - publish/
+
+imagebuild:
+  stage: imagebuild
+  script:
+    - ./build.sh -target=ImageBuild
+  dependencies:
+    - publish
