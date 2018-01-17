@@ -22,4 +22,5 @@ publish:
   dependencies:
     - test
   artifacts:
-    - /publish
+    paths:
+      - publish/
