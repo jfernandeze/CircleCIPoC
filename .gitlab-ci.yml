@@ -34,4 +34,5 @@ spatest:
 imagebuild:
   stage: imagebuild
   script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.cdpoc
     - ./build.sh -target=ImageBuild
