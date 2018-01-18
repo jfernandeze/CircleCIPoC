@@ -28,7 +28,8 @@ publish:
   script:
     - ./build.sh -target=Publish
   dependencies:
-    - test
+    - test:dotnet
+    - test:spa
   artifacts:
     paths:
       - publish/
