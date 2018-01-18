@@ -65,7 +65,8 @@ Task("UnitTests")
 	{
 		var settings = new DotNetCoreTestSettings
 		 {
-			 Configuration = configuration
+			 Configuration = configuration,
+			 NoBuild = true
 		 };
 
 		 var projectFiles = GetFiles("./src/**/*.Tests.csproj");

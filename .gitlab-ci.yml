@@ -2,24 +2,20 @@ stages:
   - build
   - test
   - publish
+  - spatest
   - imagebuild
 
 build:
   stage: build
   script:
     - ./build.sh -target=Build
+  artifacts:
+    untracked: true
 
-test:dotnet:
+test:
   stage: test
   script:
     - ./build.sh -target=UnitTests
-  dependencies:
-    - build
-
-test:spa:
-  stage: test
-  script:
-    - ./build.sh -target=SPATests
   dependencies:
     - build
 
@@ -31,8 +27,16 @@ publish:
     - test:dotnet
     - test:spa
   artifacts:
+    untracked: true
     paths:
       - publish/
+
+spatest:
+  stage: spatest
+  script:
+    - ./build.sh -target=SPATests
+  dependencies:
+    - publish
 
 imagebuild:
   stage: imagebuild
