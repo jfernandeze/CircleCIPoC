@@ -131,7 +131,7 @@ Task("UpdateNetcoreVersion")
 			DockerBuild(settings, publishTarget);
 			
 			
-			DockerPush($"registry.cdpoc/root/dialogweaver/arcmedia/DW_{targetName}:{version.SemVer}".ToLower());
+			DockerPush($"registry.cdpoc/arcmedia/dialogweaver/arcmedia/DW_{targetName}:{version.SemVer}".ToLower());
 		}
 	});
 
