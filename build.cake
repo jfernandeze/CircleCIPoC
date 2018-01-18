@@ -97,11 +97,10 @@ Task("SPATests")
 Task("GetGitVersion")
 	.Does(() =>
 	{
-		version = new Cake.Common.Tools.GitVersion.GitVersion
-		{
-			AssemblySemVer = "0.1.0",
-			SemVer = "0.1.0-ARCDIALOG-12_CreateDockerRegistry"
-		};
+		version = GitVersion(new GitVersionSettings
+			{
+				NoFetch=true
+			});
     });
 
 Task("UpdateNetcoreVersion")
@@ -126,7 +125,7 @@ Task("UpdateNetcoreVersion")
 			var targetName = publishTarget.Split(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar).Last().ToLower();
 			var settings = new DockerImageBuildSettings
 			{
-				Tag = new[] { $"registry.cdpoc/root/dialogweaver/arcmedia/DW_{targetName}:{version.SemVer}".ToLower(), $"registry.cdpoc/root/dialogweaver/arcmedia/DW_{targetName}:latest".ToLower() }
+				Tag = new[] { $"registry.cdpoc/arcmedia/dialogweaver/arcmedia/DW_{targetName}:{version.SemVer}".ToLower(), $"registry.cdpoc/arcmedia/dialogweaver/arcmedia/DW_{targetName}:latest".ToLower() }
 			};
 			DockerBuild(settings, publishTarget);
 			

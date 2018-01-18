@@ -9,10 +9,17 @@ build:
   script:
     - ./build.sh -target=Build
 
-test:
+test:dotnet:
   stage: test
   script:
     - ./build.sh -target=UnitTests
+  dependencies:
+    - build
+
+test:spa:
+  stage: test
+  script:
+    - ./build.sh -target=SPATests
   dependencies:
     - build
 
