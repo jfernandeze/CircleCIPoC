@@ -4,6 +4,7 @@ stages:
   - publish
   - spatest
   - imagebuild
+  - deploy
 
 build:
   stage: build
@@ -36,3 +37,9 @@ imagebuild:
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.cdpoc
     - ./build.sh -target=ImageBuild
+
+deploy:
+  stage: deploy
+  script:
+    - /home/gitlab-runner/rancher --url http://cdpocrancher:8080 --access-key $RancherAccessKey --secret-key $RancherSecretKey --env Default ps
+    - /home/gitlab-runner/rancher up -d -s DialogWeaver -f src/docker-compose.ci.yml
