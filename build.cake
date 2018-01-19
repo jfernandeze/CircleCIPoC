@@ -140,7 +140,6 @@ Task("UpdateNetcoreVersion")
 Task("UpdateDockerCompose")
 	.Does(() =>
 	{
-		ReplaceTextInFiles()
 		string dockerComposeContent = TransformTextFile("src/docker-compose.ci.yml")
 			.WithToken($"registry.cdpoc/arcmedia/dialogweaver/webapi", "registry.cdpoc/arcmedia/dialogweaver/webapi:{version.FullSemVer}".ToLower().Replace("+", "_"))
 			.WithToken($"registry.cdpoc/arcmedia/dialogweaver/webapi", "registry.cdpoc/arcmedia/dialogweaver/webspa:{version.FullSemVer}".ToLower().Replace("+", "_"))
