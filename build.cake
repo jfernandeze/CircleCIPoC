@@ -138,6 +138,7 @@ Task("UpdateNetcoreVersion")
 	});
 
 Task("UpdateDockerCompose")
+	.IsDependentOn("GetGitVersion")
 	.Does(() =>
 	{
 		string dockerComposeContent = TransformTextFile("src/docker-compose.ci.yml")
