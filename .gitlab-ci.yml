@@ -42,4 +42,4 @@ deploy:
   stage: deploy
   script:
     - ./build.sh -target=UpdateDockerCompose
-    - /home/gitlab-runner/rancher --url http://cdpocrancher:8080 --access-key $RancherAccessKey --secret-key $RancherSecretKey --env Default up -d -s DialogWeaver -f src/docker-compose.ci.yml
+    - /home/gitlab-runner/rancher --url http://cdpocrancher:8080 --access-key $RancherAccessKey --secret-key $RancherSecretKey --env Default up -d -s DialogWeaver --upgrade -f src/docker-compose.ci.yml
