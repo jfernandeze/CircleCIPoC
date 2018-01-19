@@ -141,12 +141,9 @@ Task("UpdateDockerCompose")
 	.IsDependentOn("GetGitVersion")
 	.Does(() =>
 	{
-		string dockerComposeContent = TransformTextFile("src/docker-compose.ci.yml")
-			.WithToken($"registry.cdpoc/arcmedia/dialogweaver/webapi", "registry.cdpoc/arcmedia/dialogweaver/webapi:{version.FullSemVer}".ToLower().Replace("+", "_"))
-			.WithToken($"registry.cdpoc/arcmedia/dialogweaver/webspa", "registry.cdpoc/arcmedia/dialogweaver/webspa:{version.FullSemVer}".ToLower().Replace("+", "_"))
-			.ToString();
-
-		FileWriteText("docker-compose.yml", dockerComposeContent);
+		var versionString = version.FullSemVer.ToLower().Replace("+", "_");
+		ReplaceTextInFiles("src/docker-compose.ci.yml", "registry.cdpoc/arcmedia/dialogweaver/webapi", $"registry.cdpoc/arcmedia/dialogweaver/webapi:{versionString}");
+		ReplaceTextInFiles("src/docker-compose.ci.yml", "registry.cdpoc/arcmedia/dialogweaver/webspa", $"registry.cdpoc/arcmedia/dialogweaver/webspa:{versionString}");
 	});
 
 private void CleanDirectory(string path)
