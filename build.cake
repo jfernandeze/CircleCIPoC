@@ -1,5 +1,6 @@
 #addin "Cake.Docker"
 #addin "Cake.Karma"
+#addin "Cake.FileHelpers"
 #tool "nuget:?package=GitVersion.CommandLine"
 
 var target = Argument("target", "Build");
@@ -134,6 +135,18 @@ Task("UpdateNetcoreVersion")
 			DockerPush($"registry.cdpoc/arcmedia/dialogweaver/{targetName}:{version.FullSemVer}".ToLower().Replace("+", "_"));
 			DockerPush($"registry.cdpoc/arcmedia/dialogweaver/{targetName}:latest".ToLower());
 		}
+	});
+
+Task("UpdateDockerCompose")
+	.Does(() =>
+	{
+		ReplaceTextInFiles()
+		string dockerComposeContent = TransformTextFile("src/docker-compose.ci.yml")
+			.WithToken($"registry.cdpoc/arcmedia/dialogweaver/webapi", "registry.cdpoc/arcmedia/dialogweaver/webapi:{version.FullSemVer}".ToLower().Replace("+", "_"))
+			.WithToken($"registry.cdpoc/arcmedia/dialogweaver/webapi", "registry.cdpoc/arcmedia/dialogweaver/webspa:{version.FullSemVer}".ToLower().Replace("+", "_"))
+			.ToString();
+
+		FileWriteText("docker-compose.yml", dockerComposeContent);
 	});
 
 private void CleanDirectory(string path)
