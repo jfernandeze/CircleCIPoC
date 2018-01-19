@@ -126,12 +126,12 @@ Task("UpdateNetcoreVersion")
 			var targetName = publishTarget.Split(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar).Last().ToLower();
 			var settings = new DockerImageBuildSettings
 			{
-				Tag = new[] { $"registry.cdpoc/arcmedia/dialogweaver/{targetName}:{version.SemVer}".ToLower(), $"registry.cdpoc/arcmedia/dialogweaver/{targetName}:latest".ToLower() }
+				Tag = new[] { $"registry.cdpoc/arcmedia/dialogweaver/{targetName}:{version.FullSemVer}".ToLower(), $"registry.cdpoc/arcmedia/dialogweaver/{targetName}:latest".ToLower() }
 			};
 			DockerBuild(settings, publishTarget);
 			
 			
-			DockerPush($"registry.cdpoc/arcmedia/dialogweaver/{targetName}:{version.SemVer}".ToLower());
+			DockerPush($"registry.cdpoc/arcmedia/dialogweaver/{targetName}:{version.FullSemVer}".ToLower());
 			DockerPush($"registry.cdpoc/arcmedia/dialogweaver/{targetName}:latest".ToLower());
 		}
 	});
