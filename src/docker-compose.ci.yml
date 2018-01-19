@@ -1,13 +1,13 @@
-version: '3'
+version: '2'
 
 services:
   webapi:
-    image: arcmedia/dw_webapi
+    image: registry.cdpoc/arcmedia/dialogweaver/webapi
     ports:
       - "5000:80"
 
   webspa:
-    image: arcmedia/dw_webspa
+    image: registry.cdpoc/arcmedia/dialogweaver/webspa
     depends_on:
       - webapi
     ports:
