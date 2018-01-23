@@ -8,6 +8,8 @@ stages:
   - deploy
 
 build:
+  tags:
+    - dialogweaver
   stage: build
   script:
     - ./build.sh -target=Build
@@ -15,6 +17,8 @@ build:
     untracked: true
 
 test:
+  tags:
+    - dialogweaver
   stage: test
   script:
     - ./build.sh -target=UnitTests
@@ -23,6 +27,8 @@ test:
       - tests
 
 publish:
+  tags:
+    - dialogweaver
   stage: publish
   script:
     - ./build.sh -target=Publish
@@ -32,23 +38,31 @@ publish:
       - publish/
 
 spatest:
+  tags:
+    - dialogweaver
   stage: spatest
   script:
     - ./build.sh -target=SPATests
 
 imagebuild:
+  tags:
+    - dialogweaver
   stage: imagebuild
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.cdpoc
     - ./build.sh -target=ImageBuild
 
 deploy:
+  tags:
+    - dialogweaver
   stage: deploy
   script:
     - ./build.sh -target=UpdateDockerCompose
     - /home/gitlab-runner/rancher --url http://cdpocrancher:8080 --access-key $RancherAccessKey --secret-key $RancherSecretKey --env Default up -d -s DialogWeaver --force-upgrade -f src/docker-compose.ci.yml
 
 pages:
+  tags:
+    - dialogweaver
   stage: deploy
   script:
     - mv tests/ public/
