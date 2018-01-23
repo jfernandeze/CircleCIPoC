@@ -1,4 +1,4 @@
-image: registry.cdpoc/arcmedia/dialogweaver/build-image:1
+image: registry.cdpoc/arcmedia/dialogweaver/build-image:2
 stages:
   - build
   - test
