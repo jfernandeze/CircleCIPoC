@@ -14,6 +14,7 @@ Task("Clean")
 	.Does(() =>
 	{
 		CleanDirectory(publishOutput);
+		CleanDirectory(testsOutput);
 	});
 
 
@@ -65,17 +66,17 @@ Task("Publish")
 Task("UnitTests")
 	.Does(() =>
 	{
-		var settings = new DotNetCoreTestSettings
-		 {
-			 Configuration = configuration,
-			 NoBuild = true,
-			 ResultsDirectory = testsOutput
-		 };
-
 		 var projectFiles = GetFiles("./src/**/*.Tests.csproj");
 		 foreach(var file in projectFiles)
 		 {
-		   
+		   var settings = new DotNetCoreTestSettings
+			 {
+				 Logger = "trx",
+				 Configuration = configuration,
+				 NoBuild = true,
+				 ResultsDirectory = testsOutput
+			 };
+
 			DotNetCoreTest(file.FullPath, settings);
 		 }
 	});

@@ -6,8 +6,8 @@
     <RootNamespace>DialogWeaver.WebApi</RootNamespace>
     <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
     <DebugType>full</DebugType>
-    <AssemblyVersion>0.1.0</AssemblyVersion>
-    <FileVersion>0.1.0</FileVersion>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
     <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
