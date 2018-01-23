@@ -1,7 +1,7 @@
 #addin "Cake.Docker"
 #addin "Cake.Karma"
 #addin "Cake.FileHelpers"
-#tool "nuget:?package=GitVersion.CommandLine"
+#tool "nuget:?package=GitVersion.CommandLine&prerelease"
 
 var target = Argument("target", "Build");
 var configuration = Argument("configuration", "Release");
