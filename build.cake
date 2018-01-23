@@ -7,6 +7,7 @@ var target = Argument("target", "Build");
 var configuration = Argument("configuration", "Release");
 var solution = Argument("solution", "src/DialogWeaver.sln");
 var publishOutput = "./publish/";
+var testsOutput = "./tests/";
 Cake.Common.Tools.GitVersion.GitVersion version;
 
 Task("Clean")
@@ -67,7 +68,8 @@ Task("UnitTests")
 		var settings = new DotNetCoreTestSettings
 		 {
 			 Configuration = configuration,
-			 NoBuild = true
+			 NoBuild = true,
+			 ResultsDirectory = testsOutput
 		 };
 
 		 var projectFiles = GetFiles("./src/**/*.Tests.csproj");

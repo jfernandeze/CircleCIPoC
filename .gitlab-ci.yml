@@ -17,6 +17,9 @@ test:
   stage: test
   script:
     - ./build.sh -target=UnitTests
+  artifacts:
+    paths:
+      - tests
 
 publish:
   stage: publish
@@ -43,3 +46,12 @@ deploy:
   script:
     - ./build.sh -target=UpdateDockerCompose
     - /home/gitlab-runner/rancher --url http://cdpocrancher:8080 --access-key $RancherAccessKey --secret-key $RancherSecretKey --env Default up -d -s DialogWeaver --force-upgrade -f src/docker-compose.ci.yml
+
+pages:
+  stage: deploy
+  script:
+    - mv tests/ public/
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
