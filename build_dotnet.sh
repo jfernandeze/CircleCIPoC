@@ -9,7 +9,8 @@
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 TOOLS_DIR=$SCRIPT_DIR/tools
 TOOLS_PROJ=$TOOLS_DIR/tools.csproj
-CAKE_VERSION=0.23.0
+NUGET_EXE=$TOOLS_DIR/nuget.exe
+CAKE_VERSION=0.25.0
 CAKE_DLL=$TOOLS_DIR/Cake.CoreCLR.$CAKE_VERSION/cake.coreclr/$CAKE_VERSION/Cake.dll
  
  
@@ -30,6 +31,26 @@ fi
 if [ ! -f "$CAKE_DLL" ]; then
     echo "Could not find Cake.exe at '$CAKE_DLL'."
     exit 1
+fi
+
+
+###########################################################################
+# INSTALL NUGET
+###########################################################################
+if [ ! -f "$NUGET_EXE" ]; then
+
+    echo "Downloading NuGet..."
+
+    curl -Lsfo "$NUGET_EXE" https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+
+    if [ $? -ne 0 ]; then
+
+        echo "An error occured while downloading nuget.exe."
+
+        exit 1
+
+    fi
+
 fi
  
 ###########################################################################
