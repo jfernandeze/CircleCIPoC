@@ -1,7 +1,7 @@
 #addin "Cake.Docker"
 #addin "Cake.Karma"
 #addin "Cake.FileHelpers"
-#tool "nuget:?package=GitVersion.CommandLine&prerelease"
+#tool "nuget:?package=GitVersion.CommandLine"
 
 var target = Argument("target", "Build");
 var configuration = Argument("configuration", "Release");
@@ -130,13 +130,12 @@ Task("UpdateNetcoreVersion")
 			var targetName = publishTarget.Split(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar).Last().ToLower();
 			var settings = new DockerImageBuildSettings
 			{
-				Tag = new[] { $"registry.cdpoc/arcmedia/dialogweaver/{targetName}:{version.FullSemVer}".ToLower().Replace("+", "_"), $"registry.cdpoc/arcmedia/dialogweaver/{targetName}:latest".ToLower() }
+				Tag = new[] { $"registry.cdpoc/arcmedia/dialogweaver/{targetName}:{version.FullSemVer}".ToLower().Replace("+", "_") }
 			};
 			DockerBuild(settings, publishTarget);
 			
 			
 			DockerPush($"registry.cdpoc/arcmedia/dialogweaver/{targetName}:{version.FullSemVer}".ToLower().Replace("+", "_"));
-			DockerPush($"registry.cdpoc/arcmedia/dialogweaver/{targetName}:latest".ToLower());
 		}
 	});
 

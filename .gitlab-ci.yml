@@ -1,4 +1,4 @@
-image: registry.cdpoc/arcmedia/dialogweaver/build-image:2
+image: registry.cdpoc/arcmedia/dialogweaver/build-image:3
 stages:
   - build
   - test
@@ -58,7 +58,7 @@ deploy:
   stage: deploy
   script:
     - ./build.sh -target=UpdateDockerCompose
-    - /home/gitlab-runner/rancher --url http://cdpocrancher:8080 --access-key $RancherAccessKey --secret-key $RancherSecretKey --env Default up -d -s DialogWeaver --force-upgrade -f src/docker-compose.ci.yml
+    - /rancher-v0.6.7/rancher --url http://cdpocrancher:8080 --access-key $RancherAccessKey --secret-key $RancherSecretKey --env Default up -d -s DialogWeaver --force-upgrade -f src/docker-compose.ci.yml
 
 pages:
   tags:
